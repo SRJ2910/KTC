@@ -37,6 +37,7 @@ dependencies:
   bottom_navy_bar: ^6.0.0
   scroll_snap_list: ^0.8.4
   image_picker: ^0.8.4+4
+  dropdown_search: ^2.0.0
 
 dev_dependencies:
   flutter_test:

@@ -1,4 +1,8 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
+import 'package:ktc/add.dart';
+import 'package:ktc/add_item.dart';
 import 'package:ktc/homepage.dart';
 
 void main() {
@@ -17,7 +21,12 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.cyan,
         canvasColor: Colors.cyan[50],
       ),
-      routes: {"/": (context) => Homepage()},
+      routes: {
+        // "/": (context) => Homepage(),
+        // "Add_Item": (context) => Additem(),
+        // "/": (context) => Additem(),
+        "/": (context) => Add_item(),
+      },
     );
   }
 }
