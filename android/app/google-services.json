@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "530902590460",
+    "project_id": "tiles-management",
+    "storage_bucket": "tiles-management.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:530902590460:android:c5abf9031802239c340879",
+        "android_client_info": {
+          "package_name": "com.example.ktc"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "530902590460-erp6jjn4i46q3b2oefagi8ci2b23eb79.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBy7X607oQ9OleZbrhCxzJfNZr8vSvFO9k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "530902590460-erp6jjn4i46q3b2oefagi8ci2b23eb79.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

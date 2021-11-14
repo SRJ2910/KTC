@@ -1,8 +1,9 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, avoid_print, deprecated_member_use, camel_case_types
 
 import 'dart:io';
 
 import 'package:dropdown_search/dropdown_search.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -16,7 +17,9 @@ class Add_item extends StatefulWidget {
 class _Add_itemState extends State<Add_item> {
   var _image;
   var imagePicker;
+  late String _imageName;
   late String _type;
+  final _storage = FirebaseStorage.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -107,7 +110,8 @@ class _Add_itemState extends State<Add_item> {
 
               setState(() {
                 _image = File(image.path);
-                print("object");
+                _imageName = image.path.split('/').last;
+                print(image.path.split('/').last);
               });
             },
           ),
@@ -157,6 +161,7 @@ class _Add_itemState extends State<Add_item> {
             child: ElevatedButton(
                 onPressed: () {
                   print(_type);
+                  uplaod(_image, _imageName);
                 },
                 child: Text("Submit"),
                 style: ElevatedButton.styleFrom(
@@ -167,5 +172,14 @@ class _Add_itemState extends State<Add_item> {
         ],
       ),
     );
+  }
+
+  uplaod(var img, String img_name) async {
+    if (img != null) {
+      var snapShot =
+          await _storage.ref().child("KTC_Galllery/$img_name").putFile(img);
+    } else {
+      print("image is not uploaded in firebase");
+    }
   }
 }
