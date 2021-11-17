@@ -29,6 +29,10 @@ class _Add_itemState extends State<Add_item> {
   final _nameController = TextEditingController();
   final _idController = TextEditingController();
 
+  bool _passwordCheck = false;
+  final _passwordController = TextEditingController();
+  static const _password = "12345";
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -76,6 +80,10 @@ class _Add_itemState extends State<Add_item> {
   }
 
   picture() {
+    if (!_passwordCheck) {
+      return security();
+    }
+
     imagePicker = ImagePicker();
 
     return SingleChildScrollView(
@@ -225,5 +233,63 @@ class _Add_itemState extends State<Add_item> {
         backgroundColor: Colors.red,
       );
     }
+  }
+
+  security() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(left: 100, right: 100, bottom: 15),
+          child: TextField(
+            obscureText: true,
+            textAlign: TextAlign.center,
+            controller: _passwordController,
+            decoration: InputDecoration(
+              labelText: "Enter Password",
+              border: OutlineInputBorder(),
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(left: 145, right: 145),
+          child: ElevatedButton(
+              onPressed: () {
+                if (_passwordController.text != _password) {
+                  Fluttertoast.showToast(
+                    msg: "Incorrect Password",
+                    gravity: ToastGravity.SNACKBAR,
+                    backgroundColor: Colors.red,
+                  );
+                  _passwordController.clear();
+                } else {
+                  setState(() {
+                    _passwordCheck = true;
+                  });
+                }
+              },
+              style: ElevatedButton.styleFrom(
+                primary: Colors.cyan,
+                onPrimary: Colors.white,
+              ),
+              child: Row(
+                children: const [
+                  Icon(
+                    Icons.lock_outlined,
+                    color: Colors.white,
+                    size: 20,
+                  ),
+                  SizedBox(
+                    width: 4,
+                  ),
+                  Text(
+                    "Submit",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ],
+              )),
+        ),
+      ],
+    );
   }
 }
