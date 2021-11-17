@@ -2,9 +2,12 @@
 
 import 'dart:io';
 
+// import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 
 class Add_item extends StatefulWidget {
@@ -17,9 +20,16 @@ class Add_item extends StatefulWidget {
 class _Add_itemState extends State<Add_item> {
   var _image;
   var imagePicker;
+
   late String _imageName;
   late String _type;
   final _storage = FirebaseStorage.instance;
+  final _firestore = FirebaseFirestore.instance;
+
+  final _nameController = TextEditingController();
+  final _idController = TextEditingController();
+
+  late String _urlList;
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +43,11 @@ class _Add_itemState extends State<Add_item> {
                 color: Colors.black,
               ),
               title: Text("Home"),
-              onTap: () {},
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.pop(context);
+                Navigator.pop(context);
+              },
             ),
             ListTile(
               leading: Icon(
@@ -123,6 +137,7 @@ class _Add_itemState extends State<Add_item> {
                 labelText: "Item Name",
                 border: OutlineInputBorder(),
               ),
+              controller: _nameController,
             ),
           ),
           Padding(
@@ -133,6 +148,7 @@ class _Add_itemState extends State<Add_item> {
                 labelText: "Item Id",
                 border: OutlineInputBorder(),
               ),
+              controller: _idController,
             ),
           ),
           Padding(
@@ -148,38 +164,110 @@ class _Add_itemState extends State<Add_item> {
                 "Room tiles"
               ],
               label: "Type",
-              hint: "country in menu mode",
+              // hint: "country in menu mode",
               onChanged: (data) {
                 print(data);
                 _type = data!;
               },
-              // selectedItem: "Select",
+              selectedItem: "Select",
             ),
           ),
           Padding(
             padding: const EdgeInsets.only(top: 20),
             child: ElevatedButton(
-                onPressed: () {
-                  print(_type);
-                  uplaod(_image, _imageName);
-                },
-                child: Text("Submit"),
-                style: ElevatedButton.styleFrom(
-                  primary: Colors.cyan,
-                  onPrimary: Colors.white,
-                )),
+              child: Text("Submit"),
+              style: ElevatedButton.styleFrom(
+                primary: Colors.cyan,
+                onPrimary: Colors.white,
+              ),
+              onPressed: () {
+                if (_nameController.text.isEmpty ||
+                    _idController.text.isEmpty ||
+                    _type.isEmpty ||
+                    _image == null) {
+                  Fluttertoast.showToast(
+                    msg: "Try Again !!!",
+                    // toastLength: Toast.LENGTH_SHORT,
+                    gravity: ToastGravity.SNACKBAR,
+                    backgroundColor: Colors.red,
+                    // textColor: Colors.red,
+                    // fontSize: 16.0
+                  );
+                } else {
+                  setState(() {
+                    print(_type);
+                    uplaod(_image, _imageName, _nameController.text,
+                        _idController.text);
+                    Fluttertoast.showToast(
+                      msg: "Item added Successfully",
+                      // toastLength: Toast.LENGTH_SHORT,
+                      gravity: ToastGravity.SNACKBAR,
+                      backgroundColor: Colors.green,
+                      // textColor: Colors.red,
+                      // fontSize: 16.0
+                    );
+                    _image = null;
+                    _nameController.clear();
+                    _idController.clear();
+                  });
+                }
+              },
+            ),
           ),
+          ElevatedButton(
+              onPressed: () {
+                var _URLlist = [];
+                _firestore.collection("Room tiles").get().then((querySnapshot) {
+                  querySnapshot.docs.forEach((element) {
+                    print(element.get("Name"));
+                    _URLlist.add(element.get("Name"));
+                  });
+                  print(_URLlist);
+                  // .forEach((result) {
+                  //   // print(result.data().values);
+                  //   _urlList = result.data().values.first;
+
+                  //   // print(_urlList);
+
+                  //   _URLlist.add(_urlList);
+                  //   print(_URLlist);
+                  // });
+                });
+              },
+              child: Text("Get data")),
         ],
       ),
     );
   }
 
-  uplaod(var img, String img_name) async {
+  uplaod(var img, String img_name, String name, String id) async {
     if (img != null) {
       var snapShot =
           await _storage.ref().child("KTC_Galllery/$img_name").putFile(img);
+
+      var downloadUrl = await snapShot.ref.getDownloadURL();
+      print(downloadUrl);
+
+      // _firestore
+      //     .collection(_type)
+      //     .add({"Name": name, "ID": id, "ImageURL": downloadUrl});
+
+      // _firestore
+      //     .collection(_type).add({}).
+
+      // if (_type == "Kitchenware") {
+      //   _firestore.collection("");
+      // } else if (_type == "Bathware") {
+      // } else if (_type == "Bathroom Tiles") {
+      // } else if (_type == "Kitchen Tiles") {
+      // } else if (_type == "Room Tiles") {}
     } else {
       print("image is not uploaded in firebase");
+      Fluttertoast.showToast(
+        msg: "Try again later",
+        gravity: ToastGravity.SNACKBAR,
+        backgroundColor: Colors.red,
+      );
     }
   }
 }

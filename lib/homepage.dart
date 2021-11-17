@@ -1,8 +1,11 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'dart:math';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:ktc/add.dart';
+import 'package:ktc/individual%20item/bathware.dart';
 import 'package:scroll_snap_list/scroll_snap_list.dart';
 
 class Homepage extends StatefulWidget {
@@ -15,12 +18,15 @@ class Homepage extends StatefulWidget {
 class _HomepageState extends State<Homepage> {
   List<int> data = [];
   int _focusedIndex = 0;
+  var _URLlist = [];
+
+  final _firestore = FirebaseFirestore.instance;
 
   @override
   void initState() {
     super.initState();
 
-    for (int i = 0; i < 30; i++) {
+    for (int i = 0; i < 5; i++) {
       data.add(Random().nextInt(100) + 1);
     }
   }
@@ -52,19 +58,52 @@ class _HomepageState extends State<Homepage> {
       // height: 550,
       child: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
             Container(
               // height: data[index].toDouble() * 2,
               width: 320,
-              height: 490,
-              color: Colors.lightBlueAccent,
+              height: 530,
+              color: Colors.cyan[200],
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Image.network(
-                    "https://picsum.photos/200/300",
+                    _URLlist[index],
+                    height: 450,
                   ),
-                  Text("i:$index\n${data[index]}"),
+
+                  // Text(
+                  //   "i:$index\n${data[index]}",
+                  //   style: TextStyle(backgroundColor: Colors.greenAccent),
+                  // ),
+                  Container(
+                      color: Colors.black12,
+                      alignment: Alignment.bottomLeft,
+                      child: Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(left: 8),
+                            child: Text(
+                              'AquaLite Blue',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 30.0),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(right: 150),
+                            child: Text(
+                              'T1234',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  // fontWeight: FontWeight.bold,
+                                  fontSize: 10.0),
+                            ),
+                          ),
+                        ],
+                      )),
                 ],
               ),
             )
@@ -76,6 +115,13 @@ class _HomepageState extends State<Homepage> {
 
   @override
   Widget build(BuildContext context) {
+    _firestore.collection("Room tiles").get().then((querySnapshot) {
+      querySnapshot.docs.forEach((element) {
+        // print(element.get("Name"));
+        _URLlist.add(element.get("ImageURL"));
+      });
+      // print(_URLlist);
+    });
     return DefaultTabController(
       length: 5,
       initialIndex: 0,
@@ -97,7 +143,10 @@ class _HomepageState extends State<Homepage> {
                   color: Colors.black,
                 ),
                 title: Text("Add Item"),
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => Add_item()));
+                },
               ),
               ListTile(
                 leading: Icon(
@@ -152,15 +201,14 @@ class _HomepageState extends State<Homepage> {
                     itemBuilder: _buildListItem,
                     itemCount: data.length,
                     dynamicItemSize: true,
+                    // shrinkWrap: true
                   ),
                 ),
                 _buildItemDetail(),
               ],
             ),
           ),
-          Center(
-            child: Text("Bath-Ware"),
-          ),
+          Bathware(),
           Center(
             child: Text("Tiles - Bathroom"),
           ),

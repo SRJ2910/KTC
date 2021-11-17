@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:ktc/add.dart';
 import 'package:ktc/add_item.dart';
 import 'package:ktc/homepage.dart';
+import 'package:ktc/individual%20item/bathware.dart';
 
 // void main() {
 //   Firebase.initializeApp();
@@ -43,7 +44,7 @@ class MyApp extends StatelessWidget {
               print("There is some error ${snapshot.error.toString()}");
               return Text("There is some error");
             } else if (snapshot.hasData) {
-              return Add_item();
+              return Homepage();
             } else {
               return Material(
                 //openning page
