@@ -8,6 +8,7 @@ import 'package:ktc/add.dart';
 import 'package:ktc/individual%20item/bathtiles.dart';
 import 'package:ktc/individual%20item/bathware.dart';
 import 'package:ktc/individual%20item/kitchentiles.dart';
+import 'package:ktc/individual%20item/kitchenware.dart';
 import 'package:ktc/individual%20item/roomtiles.dart';
 import 'package:scroll_snap_list/scroll_snap_list.dart';
 
@@ -194,23 +195,7 @@ class _HomepageState extends State<Homepage> {
           ),
         ),
         body: TabBarView(children: [
-          Center(
-            child: Column(
-              children: <Widget>[
-                Expanded(
-                  child: ScrollSnapList(
-                    onItemFocus: _onItemFocus,
-                    itemSize: 320,
-                    itemBuilder: _buildListItem,
-                    itemCount: data.length,
-                    dynamicItemSize: true,
-                    // shrinkWrap: true
-                  ),
-                ),
-                _buildItemDetail(),
-              ],
-            ),
-          ),
+          Kitchenware(),
           Bathware(),
           Bathtiles(),
           Kitchentiles(),
