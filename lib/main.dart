@@ -3,7 +3,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:ktc/add.dart';
-import 'package:ktc/add_item.dart';
 import 'package:ktc/homepage.dart';
 import 'package:ktc/individual%20item/bathware.dart';
 

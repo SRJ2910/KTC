@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, avoid_print, deprecated_member_use, camel_case_types
+// ignore_for_file: prefer_const_constructors, avoid_print, deprecated_member_use, camel_case_types, prefer_typing_uninitialized_variables, non_constant_identifier_names
 
 import 'dart:io';
 
@@ -11,7 +11,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 
 class Add_item extends StatefulWidget {
-  Add_item({Key? key}) : super(key: key);
+  const Add_item({Key? key}) : super(key: key);
 
   @override
   _Add_itemState createState() => _Add_itemState();
@@ -28,8 +28,6 @@ class _Add_itemState extends State<Add_item> {
 
   final _nameController = TextEditingController();
   final _idController = TextEditingController();
-
-  late String _urlList;
 
   @override
   Widget build(BuildContext context) {
@@ -79,11 +77,6 @@ class _Add_itemState extends State<Add_item> {
 
   picture() {
     imagePicker = ImagePicker();
-    // @override
-    // void initState() {
-    //   super.initState();
-    //   imagePicker = new ImagePicker();
-    // }
 
     return SingleChildScrollView(
       child: Column(
@@ -187,11 +180,8 @@ class _Add_itemState extends State<Add_item> {
                     _image == null) {
                   Fluttertoast.showToast(
                     msg: "Try Again !!!",
-                    // toastLength: Toast.LENGTH_SHORT,
                     gravity: ToastGravity.SNACKBAR,
                     backgroundColor: Colors.red,
-                    // textColor: Colors.red,
-                    // fontSize: 16.0
                   );
                 } else {
                   setState(() {
@@ -200,11 +190,8 @@ class _Add_itemState extends State<Add_item> {
                         _idController.text);
                     Fluttertoast.showToast(
                       msg: "Item added Successfully",
-                      // toastLength: Toast.LENGTH_SHORT,
                       gravity: ToastGravity.SNACKBAR,
                       backgroundColor: Colors.green,
-                      // textColor: Colors.red,
-                      // fontSize: 16.0
                     );
                     _image = null;
                     _nameController.clear();
@@ -214,27 +201,6 @@ class _Add_itemState extends State<Add_item> {
               },
             ),
           ),
-          ElevatedButton(
-              onPressed: () {
-                var _URLlist = [];
-                _firestore.collection("Room tiles").get().then((querySnapshot) {
-                  querySnapshot.docs.forEach((element) {
-                    print(element.get("Name"));
-                    _URLlist.add(element.get("Name"));
-                  });
-                  print(_URLlist);
-                  // .forEach((result) {
-                  //   // print(result.data().values);
-                  //   _urlList = result.data().values.first;
-
-                  //   // print(_urlList);
-
-                  //   _URLlist.add(_urlList);
-                  //   print(_URLlist);
-                  // });
-                });
-              },
-              child: Text("Get data")),
         ],
       ),
     );
@@ -251,16 +217,6 @@ class _Add_itemState extends State<Add_item> {
       _firestore
           .collection(_type)
           .add({"Name": name, "ID": id, "ImageURL": downloadUrl});
-
-      // _firestore
-      //     .collection(_type).add({}).
-
-      // if (_type == "Kitchenware") {
-      //   _firestore.collection("");
-      // } else if (_type == "Bathware") {
-      // } else if (_type == "Bathroom Tiles") {
-      // } else if (_type == "Kitchen Tiles") {
-      // } else if (_type == "Room Tiles") {}
     } else {
       print("image is not uploaded in firebase");
       Fluttertoast.showToast(
