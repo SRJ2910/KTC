@@ -5,7 +5,10 @@ import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:ktc/add.dart';
+import 'package:ktc/individual%20item/bathtiles.dart';
 import 'package:ktc/individual%20item/bathware.dart';
+import 'package:ktc/individual%20item/kitchentiles.dart';
+import 'package:ktc/individual%20item/roomtiles.dart';
 import 'package:scroll_snap_list/scroll_snap_list.dart';
 
 class Homepage extends StatefulWidget {
@@ -209,15 +212,9 @@ class _HomepageState extends State<Homepage> {
             ),
           ),
           Bathware(),
-          Center(
-            child: Text("Tiles - Bathroom"),
-          ),
-          Center(
-            child: Text("Tiles - Kitchen"),
-          ),
-          Center(
-            child: Text("Tiles - RoomFloor"),
-          ),
+          Bathtiles(),
+          Kitchentiles(),
+          Roomtiles()
         ]),
       ),
     );

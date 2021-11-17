@@ -159,7 +159,7 @@ class _Add_itemState extends State<Add_item> {
               items: const [
                 "Kitchenware",
                 "Bathware",
-                "Bathroom Tiles",
+                "Bathroom tiles",
                 "Kitchen tiles",
                 "Room tiles"
               ],
@@ -248,9 +248,9 @@ class _Add_itemState extends State<Add_item> {
       var downloadUrl = await snapShot.ref.getDownloadURL();
       print(downloadUrl);
 
-      // _firestore
-      //     .collection(_type)
-      //     .add({"Name": name, "ID": id, "ImageURL": downloadUrl});
+      _firestore
+          .collection(_type)
+          .add({"Name": name, "ID": id, "ImageURL": downloadUrl});
 
       // _firestore
       //     .collection(_type).add({}).
