@@ -9,6 +9,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:flutter/services.dart';
 
 class Add_item extends StatefulWidget {
   const Add_item({Key? key}) : super(key: key);
@@ -191,6 +192,7 @@ class _Add_itemState extends State<Add_item> {
                     gravity: ToastGravity.SNACKBAR,
                     backgroundColor: Colors.red,
                   );
+                  HapticFeedback.lightImpact();
                 } else {
                   setState(() {
                     print(_type);
@@ -201,6 +203,7 @@ class _Add_itemState extends State<Add_item> {
                       gravity: ToastGravity.SNACKBAR,
                       backgroundColor: Colors.green,
                     );
+                    HapticFeedback.heavyImpact();
                     _image = null;
                     _nameController.clear();
                     _idController.clear();
@@ -261,6 +264,7 @@ class _Add_itemState extends State<Add_item> {
                     gravity: ToastGravity.SNACKBAR,
                     backgroundColor: Colors.red,
                   );
+                  HapticFeedback.lightImpact();
                   _passwordController.clear();
                 } else {
                   setState(() {
