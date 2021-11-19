@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final Future<FirebaseApp> _fbapp = Firebase.initializeApp();
     return MaterialApp(
-        title: 'Flutter Demo',
+        title: 'KTC',
         theme: ThemeData(
           primarySwatch: Colors.cyan,
           canvasColor: Colors.cyan[50],
