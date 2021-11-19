@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, avoid_print, deprecated_member_use, camel_case_types, prefer_typing_uninitialized_variables, non_constant_identifier_names
 
 import 'dart:io';
+import 'dart:ui';
 
 // import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -10,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/services.dart';
+import 'package:ktc/pasword_reset.dart';
 
 class Add_item extends StatefulWidget {
   const Add_item({Key? key}) : super(key: key);
@@ -33,6 +35,8 @@ class _Add_itemState extends State<Add_item> {
   bool _passwordCheck = false;
   final _passwordController = TextEditingController();
   static const _password = "12345";
+
+  late var _currentPassword = "";
 
   @override
   Widget build(BuildContext context) {
@@ -134,6 +138,7 @@ class _Add_itemState extends State<Add_item> {
           Padding(
             padding: const EdgeInsets.only(left: 35, right: 35, top: 30),
             child: TextField(
+              textCapitalization: TextCapitalization.words,
               style: TextStyle(),
               decoration: InputDecoration(
                 labelText: "Item Name",
@@ -145,6 +150,7 @@ class _Add_itemState extends State<Add_item> {
           Padding(
             padding: const EdgeInsets.only(left: 35, right: 35, top: 10),
             child: TextField(
+              textCapitalization: TextCapitalization.words,
               style: TextStyle(),
               decoration: InputDecoration(
                 labelText: "Item Id",
@@ -239,28 +245,92 @@ class _Add_itemState extends State<Add_item> {
   }
 
   security() {
+    print(_currentPassword);
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Padding(
-          padding: const EdgeInsets.only(left: 100, right: 100, bottom: 15),
-          child: TextField(
-            obscureText: true,
-            textAlign: TextAlign.center,
-            controller: _passwordController,
-            decoration: InputDecoration(
-              labelText: "Enter Password",
-              border: OutlineInputBorder(),
+          padding: const EdgeInsets.only(bottom: 25),
+          child: Icon(
+            Icons.security_outlined,
+            size: 75,
+            color: Colors.black,
+          ),
+        ),
+        ListTile(
+          title: Row(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(bottom: 20),
+                child: Text(
+                  "Password ",
+                  textScaleFactor: 1.2,
+                  style: TextStyle(fontWeight: FontWeight.w500),
+                ),
+              ),
+              Expanded(
+                  child: Padding(
+                padding: const EdgeInsets.only(
+                    left: 47, right: 0, top: 0, bottom: 20),
+                child: TextField(
+                  controller: _passwordController,
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(), hintText: "Enter password"),
+                  // obscureText: true,
+                  onTap: () {
+                    _firestore
+                        .collection("Password")
+                        .orderBy("Time", descending: true)
+                        .limit(1)
+                        .get()
+                        .then((querySnapshot) {
+                      for (var element in querySnapshot.docs) {
+                        // print(element.get("New"));
+                        setState(() {
+                          _currentPassword = element.get("New");
+                        });
+                      }
+                    });
+                  },
+                ),
+              ))
+            ],
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(bottom: 5),
+          child: InkWell(
+            child: Text(
+              "Reset Password",
+              style: TextStyle(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 15,
+                  decoration: TextDecoration.underline),
             ),
+            splashColor: Colors.white,
+            highlightColor: Colors.white,
+            onTap: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => Password_reset()));
+            },
           ),
         ),
         Padding(
           padding: const EdgeInsets.only(left: 145, right: 145),
           child: ElevatedButton(
               onPressed: () {
-                if (_passwordController.text != _password) {
+                if (_passwordController.text != _currentPassword &&
+                    _passwordController.text.isNotEmpty) {
                   Fluttertoast.showToast(
                     msg: "Incorrect Password",
+                    gravity: ToastGravity.SNACKBAR,
+                    backgroundColor: Colors.red,
+                  );
+                  HapticFeedback.lightImpact();
+                  _passwordController.clear();
+                } else if (_passwordController.text.isEmpty) {
+                  Fluttertoast.showToast(
+                    msg: "Password cannot be blank",
                     gravity: ToastGravity.SNACKBAR,
                     backgroundColor: Colors.red,
                   );
@@ -279,7 +349,7 @@ class _Add_itemState extends State<Add_item> {
               child: Row(
                 children: const [
                   Icon(
-                    Icons.lock_outlined,
+                    Icons.lock_open_outlined,
                     color: Colors.white,
                     size: 20,
                   ),
@@ -287,7 +357,7 @@ class _Add_itemState extends State<Add_item> {
                     width: 4,
                   ),
                   Text(
-                    "Submit",
+                    "Unlock",
                     style: TextStyle(color: Colors.white),
                   ),
                 ],

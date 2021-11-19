@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:ktc/add.dart';
 import 'package:ktc/homepage.dart';
 import 'package:ktc/individual%20item/bathware.dart';
+import 'package:ktc/pasword_reset.dart';
 
 // void main() {
 //   Firebase.initializeApp();

@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'dart:math';
 
@@ -64,10 +64,31 @@ class _KitchenwareState extends State<Kitchenware> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Image.network(
-                    // _urlList[index],
-                    img(_urlList, index),
-                    height: 450,
+                  InteractiveViewer(
+                    // height: 450,
+                    child: Image.network(
+                      // _urlList[index],
+                      img(_urlList, index),
+                      height: 472,
+                      width: 320,
+                      loadingBuilder: (context, child, loadingProgress) {
+                        if (loadingProgress == null) return child;
+                        return Column(
+                          children: [
+                            SizedBox(
+                              height: 235,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 5),
+                              child: CircularProgressIndicator(
+                                color: Colors.black,
+                              ),
+                            ),
+                            Text("Loading"),
+                          ],
+                        );
+                      },
+                    ),
                   ),
                   Container(
                       color: Colors.black12,
@@ -134,6 +155,7 @@ class _KitchenwareState extends State<Kitchenware> {
               itemBuilder: _buildListItem,
               itemCount: data.length,
               dynamicItemSize: true,
+              curve: Curves.fastLinearToSlowEaseIn,
             ),
           ),
         ],

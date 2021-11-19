@@ -7,6 +7,7 @@ import 'package:ktc/individual%20item/bathware.dart';
 import 'package:ktc/individual%20item/kitchentiles.dart';
 import 'package:ktc/individual%20item/kitchenware.dart';
 import 'package:ktc/individual%20item/roomtiles.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Homepage extends StatefulWidget {
   Homepage({Key? key}) : super(key: key);
@@ -46,11 +47,15 @@ class _HomepageState extends State<Homepage> {
               ),
               ListTile(
                 leading: Icon(
-                  Icons.shopping_cart,
+                  Icons.call,
                   color: Colors.black,
                 ),
-                title: Text("Order"),
-                onTap: () {},
+                title: Text("Contact"),
+                onTap: () {
+                  setState(() {
+                    launch("tel:7250952280");
+                  });
+                },
               ),
             ],
           ),
