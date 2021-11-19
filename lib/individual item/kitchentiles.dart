@@ -64,10 +64,31 @@ class _KitchentilesState extends State<Kitchentiles> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Image.network(
-                    // _urlList[index],
-                    img(_urlList, index),
-                    height: 450,
+                  InteractiveViewer(
+                    // height: 450,
+                    child: Image.network(
+                      // _urlList[index],
+                      img(_urlList, index),
+                      height: 472,
+                      width: 320,
+                      loadingBuilder: (context, child, loadingProgress) {
+                        if (loadingProgress == null) return child;
+                        return Column(
+                          children: [
+                            SizedBox(
+                              height: 235,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 5),
+                              child: CircularProgressIndicator(
+                                color: Colors.black,
+                              ),
+                            ),
+                            Text("Loading"),
+                          ],
+                        );
+                      },
+                    ),
                   ),
                   Container(
                       color: Colors.black12,
@@ -134,6 +155,7 @@ class _KitchentilesState extends State<Kitchentiles> {
               itemBuilder: _buildListItem,
               itemCount: data.length,
               dynamicItemSize: true,
+              curve: Curves.fastLinearToSlowEaseIn,
             ),
           ),
         ],

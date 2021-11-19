@@ -31,7 +31,6 @@ class _Password_resetState extends State<Password_reset> {
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        // crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Padding(
             padding: const EdgeInsets.only(bottom: 25),
@@ -126,20 +125,7 @@ class _Password_resetState extends State<Password_reset> {
                 onPrimary: Colors.white,
               ),
               onPressed: () {
-                // _firestore
-                //     .collection("Password")
-                //     .orderBy("Time", descending: true)
-                //     .limit(1)
-                //     .get()
-                //     .then((querySnapshot) {
-                //   for (var element in querySnapshot.docs) {
-                //     // print(element.get("New"));
-                //     setState(() {
-                //       _currentPassword = element.get("New");
-                //     });
-                //   }
-                // });
-                print(_currentPassword);
+                // print(_currentPassword);
 
                 if (_currentPassword == currentpasswordController.text &&
                     currentpasswordController.text.isNotEmpty &&
