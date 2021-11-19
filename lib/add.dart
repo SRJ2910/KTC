@@ -12,6 +12,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/services.dart';
 import 'package:ktc/pasword_reset.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Add_item extends StatefulWidget {
   const Add_item({Key? key}) : super(key: key);
@@ -66,11 +67,15 @@ class _Add_itemState extends State<Add_item> {
             ),
             ListTile(
               leading: Icon(
-                Icons.shopping_cart,
+                Icons.call,
                 color: Colors.black,
               ),
-              title: Text("Order"),
-              onTap: () {},
+              title: Text("Contact"),
+              onTap: () {
+                setState(() {
+                  launch("tel:7250952280");
+                });
+              },
             ),
           ],
         ),

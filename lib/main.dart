@@ -31,6 +31,7 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.cyan,
           canvasColor: Colors.cyan[50],
         ),
+        debugShowCheckedModeBanner: false,
         // routes: {
         //   // "/": (context) => Homepage(),
         //   // "Add_Item": (context) => Additem(),
