@@ -71,6 +71,7 @@ class _BathwareState extends State<Bathware> {
                       img(_urlList, index),
                       height: 472,
                       width: 320,
+                      fit: BoxFit.fill,
                       loadingBuilder: (context, child, loadingProgress) {
                         if (loadingProgress == null) return child;
                         return Column(

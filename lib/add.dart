@@ -145,6 +145,7 @@ class _Add_itemState extends State<Add_item> {
             child: TextField(
               textCapitalization: TextCapitalization.words,
               style: TextStyle(),
+              maxLength: 18,
               decoration: InputDecoration(
                 labelText: "Item Name",
                 border: OutlineInputBorder(),
@@ -155,6 +156,7 @@ class _Add_itemState extends State<Add_item> {
           Padding(
             padding: const EdgeInsets.only(left: 35, right: 35, top: 10),
             child: TextField(
+              maxLength: 18,
               textCapitalization: TextCapitalization.words,
               style: TextStyle(),
               decoration: InputDecoration(
@@ -281,7 +283,7 @@ class _Add_itemState extends State<Add_item> {
                   controller: _passwordController,
                   decoration: InputDecoration(
                       border: OutlineInputBorder(), hintText: "Enter password"),
-                  // obscureText: true,
+                  obscureText: true,
                   onTap: () {
                     _firestore
                         .collection("Password")
