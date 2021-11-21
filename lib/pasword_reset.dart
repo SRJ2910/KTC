@@ -101,8 +101,8 @@ class _Password_resetState extends State<Password_reset> {
               ],
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(top: 25, left: 150, right: 150),
+          Container(
+            width: 100,
             child: ElevatedButton(
               child: Row(
                 children: const [

@@ -322,8 +322,8 @@ class _Add_itemState extends State<Add_item> {
             },
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.only(left: 145, right: 145),
+        Container(
+          width: 100,
           child: ElevatedButton(
               onPressed: () {
                 if (_passwordController.text != _currentPassword &&
