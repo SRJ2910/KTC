@@ -101,17 +101,17 @@ class _Add_itemState extends State<Add_item> {
         children: [
           InkWell(
             child: Container(
-              height: 330,
-              width: 330,
+              height: 325,
+              width: 325,
               decoration: BoxDecoration(
                   color: Colors.cyan.shade300,
-                  borderRadius: BorderRadius.circular(20)),
+                  borderRadius: BorderRadius.circular(10)),
               child: _image != null
                   ? Image.file(
                       _image,
                       width: 200.0,
                       height: 200.0,
-                      fit: BoxFit.contain,
+                      fit: BoxFit.fill,
                     )
                   : Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -323,7 +323,7 @@ class _Add_itemState extends State<Add_item> {
           ),
         ),
         Container(
-          width: 100,
+          width: 105,
           child: ElevatedButton(
               onPressed: () {
                 if (_passwordController.text != _currentPassword &&
@@ -354,6 +354,8 @@ class _Add_itemState extends State<Add_item> {
                 onPrimary: Colors.white,
               ),
               child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: const [
                   Icon(
                     Icons.lock_open_outlined,

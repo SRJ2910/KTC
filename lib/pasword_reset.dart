@@ -103,65 +103,70 @@ class _Password_resetState extends State<Password_reset> {
           ),
           Container(
             width: 100,
-            child: ElevatedButton(
-              child: Row(
-                children: const [
-                  Icon(
-                    Icons.refresh_outlined,
-                    color: Colors.white,
-                    size: 20,
-                  ),
-                  SizedBox(
-                    width: 4,
-                  ),
-                  Text(
-                    "Reset",
-                    style: TextStyle(color: Colors.white),
-                  ),
-                ],
-              ),
-              style: ElevatedButton.styleFrom(
-                primary: Colors.cyan,
-                onPrimary: Colors.white,
-              ),
-              onPressed: () {
-                // print(_currentPassword);
+            child: Padding(
+              padding: const EdgeInsets.only(top: 20),
+              child: ElevatedButton(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: const [
+                    Icon(
+                      Icons.refresh_outlined,
+                      color: Colors.white,
+                      size: 20,
+                    ),
+                    SizedBox(
+                      width: 4,
+                    ),
+                    Text(
+                      "Reset",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ],
+                ),
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.cyan,
+                  onPrimary: Colors.white,
+                ),
+                onPressed: () {
+                  // print(_currentPassword);
 
-                if (_currentPassword == currentpasswordController.text &&
-                    currentpasswordController.text.isNotEmpty &&
-                    newpasswordController.text.isNotEmpty) {
-                  _firestore.collection("Password").doc(date).set({
-                    "Time": date,
-                    "Previous": _currentPassword,
-                    "New": newpasswordController.text
-                  });
-                  Fluttertoast.showToast(
-                    msg: "Password Changed Successfully",
-                    gravity: ToastGravity.SNACKBAR,
-                    backgroundColor: Colors.green,
-                  );
-                  HapticFeedback.lightImpact();
-                  Navigator.pop(context);
-                } else if (currentpasswordController.text.isEmpty ||
-                    newpasswordController.text.isEmpty) {
-                  Fluttertoast.showToast(
-                    msg: "Password cannot be blank",
-                    gravity: ToastGravity.SNACKBAR,
-                    backgroundColor: Colors.red,
-                  );
-                  HapticFeedback.lightImpact();
-                } else {
-                  Fluttertoast.showToast(
-                    msg: "Failed",
-                    gravity: ToastGravity.SNACKBAR,
-                    backgroundColor: Colors.red,
-                  );
-                  HapticFeedback.lightImpact();
-                }
+                  if (_currentPassword == currentpasswordController.text &&
+                      currentpasswordController.text.isNotEmpty &&
+                      newpasswordController.text.isNotEmpty) {
+                    _firestore.collection("Password").doc(date).set({
+                      "Time": date,
+                      "Previous": _currentPassword,
+                      "New": newpasswordController.text
+                    });
+                    Fluttertoast.showToast(
+                      msg: "Password Changed Successfully",
+                      gravity: ToastGravity.SNACKBAR,
+                      backgroundColor: Colors.green,
+                    );
+                    HapticFeedback.lightImpact();
+                    Navigator.pop(context);
+                  } else if (currentpasswordController.text.isEmpty ||
+                      newpasswordController.text.isEmpty) {
+                    Fluttertoast.showToast(
+                      msg: "Password cannot be blank",
+                      gravity: ToastGravity.SNACKBAR,
+                      backgroundColor: Colors.red,
+                    );
+                    HapticFeedback.lightImpact();
+                  } else {
+                    Fluttertoast.showToast(
+                      msg: "Failed",
+                      gravity: ToastGravity.SNACKBAR,
+                      backgroundColor: Colors.red,
+                    );
+                    HapticFeedback.lightImpact();
+                  }
 
-                currentpasswordController.clear();
-                newpasswordController.clear();
-              },
+                  currentpasswordController.clear();
+                  newpasswordController.clear();
+                },
+              ),
             ),
           ),
           // Padding(

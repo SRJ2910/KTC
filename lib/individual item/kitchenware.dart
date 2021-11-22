@@ -51,62 +51,70 @@ class _KitchenwareState extends State<Kitchenware> {
   Widget _buildListItem(BuildContext context, int index) {
     //horizontal
     return SizedBox(
-      width: 320,
+      width: 340,
       // height: 550,
       child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
             Container(
-              width: 320,
-              height: 530,
+              width: 340,
+              height: 550,
               color: Colors.cyan[200],
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  InteractiveViewer(
-                    // height: 450,
-                    child: Image.network(
-                      // _urlList[index],
-                      img(_urlList, index),
-                      height: 472,
-                      width: 320,
-                      fit: BoxFit.fill,
-                      loadingBuilder: (context, child, loadingProgress) {
-                        if (loadingProgress == null) return child;
-                        return Column(
-                          children: [
-                            SizedBox(
-                              height: 235,
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(bottom: 5),
-                              child: CircularProgressIndicator(
-                                color: Colors.black,
+                  Expanded(
+                    child: InteractiveViewer(
+                      // height: 450,
+                      child: Image.network(
+                        // _urlList[index],
+                        img(_urlList, index),
+                        // height: 500,
+                        // width: 340,
+                        fit: BoxFit.fill,
+                        loadingBuilder: (context, child, loadingProgress) {
+                          if (loadingProgress == null) return child;
+                          return Column(
+                            children: [
+                              SizedBox(
+                                height: 235,
                               ),
-                            ),
-                            Text("Loading"),
-                          ],
-                        );
-                      },
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 5),
+                                child: CircularProgressIndicator(
+                                  color: Colors.black,
+                                ),
+                              ),
+                              Text("Loading"),
+                            ],
+                          );
+                        },
+                      ),
                     ),
                   ),
                   Container(
                       color: Colors.black12,
-                      width: 320,
+                      width: 340,
                       child: Column(
                         children: [
-                          Text(
-                            _nameList[index],
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 30.0),
+                          SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            child: Text(
+                              _nameList[index],
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 30.0),
+                            ),
                           ),
-                          Text(
-                            "" + _idList[index],
-                            style:
-                                TextStyle(color: Colors.black, fontSize: 20.0),
+                          SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            child: Text(
+                              "" + _idList[index],
+                              style: TextStyle(
+                                  color: Colors.black, fontSize: 20.0),
+                            ),
                           ),
                         ],
                       )),
@@ -152,7 +160,7 @@ class _KitchenwareState extends State<Kitchenware> {
           Expanded(
             child: ScrollSnapList(
               onItemFocus: _onItemFocus,
-              itemSize: 320,
+              itemSize: 340,
               itemBuilder: _buildListItem,
               itemCount: data.length,
               dynamicItemSize: true,
